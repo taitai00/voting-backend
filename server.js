@@ -16,6 +16,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+-app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://voting-mdj9.onrender.com/"],
