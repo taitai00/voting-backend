@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
 const cors = require("cors");
+const e = require("express");
 
 // express app
 const app = express();
@@ -16,7 +17,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
--app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://voting-mdj9.onrender.com/"],
@@ -39,3 +40,12 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+if (process.env.NODE_ENV === "production") {
+  //*Set static folder
+  app.use(express.static("frontend/build"));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+  );
+}
