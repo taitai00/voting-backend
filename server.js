@@ -9,6 +9,7 @@ const e = require("express");
 
 // express app
 const app = express();
+app.use(cors());
 
 // middleware
 app.use(express.json());
